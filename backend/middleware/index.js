@@ -5,4 +5,5 @@ module.exports = {
     errorHandler,
     checkEmailToken:token.checkEmailToken,
     checkToken:token.checkToken,
+    testValidateToken:token.testValidateToken,
 }

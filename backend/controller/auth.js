@@ -21,7 +21,7 @@ const register = (req, res, next) => {
             }).save()
                 .then(value => {
                     console.log(value)
-                    sendEmail(value,res,next)
+                    return sendEmail(value,res,next)
                 })
                 .catch(error => {
                     if (error.message.toString().includes('email')) {
@@ -146,15 +146,16 @@ const resetPassword = async (req, res, next) => {
 
 function userWithOutPassword(value) {
     return {
+        _id: value._id,
         name: value.name,
         email: value.email,
         emailIsValidate: value.emailIsValidate,
         gender: value.gender,
         dateOfBirth: value.dateOfBirth,
-        _id: value._id,
+        subscribers: value.subscribers,
         createdAt: value.createdAt,
         updatedAt: value.updatedAt,
-        __v: value.__v
+        __v: value.__v,
     }
 }
 

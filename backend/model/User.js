@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
         },
         code: {
             type: String,
+        },
+        subscribers: {
+            type: Array,
+            default: []
         }
     },
     {

@@ -29,6 +29,22 @@ const checkToken = (req, res, next) => {
         }
     }
 };
+const testValidateToken = (token) => {
+    const secretKey = process.env.PRIVATE_KEY_FOR_TOKEN;
+    try {
+        const decode = jwt.verify(token, secretKey);
+        console.log(decode._id);
+        return  decode._id
+    } catch (e) {
+        if (e instanceof jwt.TokenExpiredError) {
+            throw new Error('Token has expired. Please obtain a new token for authentication.');
+        } else if (e instanceof jwt.JsonWebTokenError) {
+            throw new Error('Invalid token. Please provide a valid token for authentication.');
+        } else {
+            throw new Error('An error occurred while processing your request. Please check your token or contact support for assistance.');
+        }
+    }
+}
 const checkEmailToken = (req, res, next) => {
     const authHeader = req.get('authorization');
 
@@ -60,5 +76,6 @@ const checkEmailToken = (req, res, next) => {
 };
 module.exports = {
     checkToken,
-    checkEmailToken
+    checkEmailToken,
+    testValidateToken,
 }
